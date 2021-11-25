@@ -1,0 +1,30 @@
+const rebuildData = (value, arr) => {
+      if (!arr) {
+        return []
+      }
+      let newarr = [];
+      arr.forEach(element => {
+        if (element.title.indexOf(value) > -1) {
+          const ab = rebuildData(value, element.children);
+          const obj = {
+            ...element,
+            children: ab
+          }
+          newarr.push(obj);
+        } else {
+          if (element.children && element.children.length > 0) {
+            const ab = rebuildData(value, element.children);
+            const obj = {
+              ...element,
+              children: ab
+            };
+            if (ab && ab.length > 0) {
+              newarr.push(obj);
+            }
+          }
+        }
+      });
+      return newarr;
+    };
+    
+console.log(rebuildData('บร', arr))
